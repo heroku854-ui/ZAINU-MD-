@@ -1,0 +1,17 @@
+{
+  "name": "zainu-md",
+  "version": "1.0.0",
+  "description": "ZAINU-MD Multi-Session WhatsApp Bot Framework",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "engines": {
+    "node": "24.x"
+  },
+  "dependencies": {
+    "@whiskeysockets/baileys": "7.0.0-rc14",
+    "dotenv": "latest",
+    "pino": "latest"
+  }
+}
