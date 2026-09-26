@@ -1,7 +1,5 @@
-# Commands
+# Handlers
 
-This directory is reserved for future bot commands.
+This directory is reserved for future event and message handlers.
 
-No commands are included in the base framework.
-
-The owner can add custom command modules here later.
+The base framework intentionally contains no command handlers.
