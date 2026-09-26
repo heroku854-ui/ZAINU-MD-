@@ -1,5 +1,5 @@
-# Handlers
+# Web Panel
 
-This directory is reserved for future event and message handlers.
+This directory is reserved for future web-panel assets and extensions.
 
-The base framework intentionally contains no command handlers.
+The main server currently exposes the basic bot/session API.

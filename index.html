@@ -1,0 +1,774 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  >
+
+  <title>ZAINU-MD | Control Panel</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      min-height: 100vh;
+      font-family: Arial, Helvetica, sans-serif;
+      background: #080a0f;
+      color: #f5f7fa;
+      padding: 18px;
+    }
+
+    .container {
+      width: 100%;
+      max-width: 760px;
+      margin: 0 auto;
+    }
+
+    .header {
+      border: 2px solid #2b303b;
+      border-radius: 20px;
+      padding: 24px 20px;
+      margin-bottom: 16px;
+      background: #0d1017;
+    }
+
+    .brand {
+      font-size: 30px;
+      font-weight: 800;
+      letter-spacing: -0.5px;
+    }
+
+    .subtitle {
+      margin-top: 8px;
+      color: #9da5b4;
+      font-size: 14px;
+    }
+
+    .status-row {
+      display: flex;
+      align-items: center;
+      gap: 9px;
+      margin-top: 18px;
+      color: #b9c0cc;
+      font-size: 14px;
+    }
+
+    .dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: #35d07f;
+      box-shadow: 0 0 12px rgba(53, 208, 127, 0.6);
+    }
+
+    .section {
+      border: 2px solid #2b303b;
+      border-radius: 20px;
+      padding: 20px;
+      margin-bottom: 16px;
+      background: #0d1017;
+    }
+
+    .section-title {
+      font-size: 19px;
+      font-weight: 700;
+      margin-bottom: 15px;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 10px;
+    }
+
+    .card {
+      border: 1px solid #292f3a;
+      border-radius: 14px;
+      padding: 15px;
+      background: #11151d;
+    }
+
+    .label {
+      color: #8f98a8;
+      font-size: 12px;
+      margin-bottom: 7px;
+    }
+
+    .value {
+      font-size: 17px;
+      font-weight: 700;
+      word-break: break-word;
+    }
+
+    input {
+      width: 100%;
+      padding: 14px;
+      border: 1px solid #343b48;
+      border-radius: 12px;
+      outline: none;
+      background: #080a0f;
+      color: #fff;
+      font-size: 15px;
+      margin-bottom: 10px;
+    }
+
+    input:focus {
+      border-color: #657080;
+    }
+
+    button {
+      width: 100%;
+      border: 0;
+      border-radius: 12px;
+      padding: 14px;
+      background: #f1f3f5;
+      color: #080a0f;
+      font-size: 15px;
+      font-weight: 800;
+      cursor: pointer;
+    }
+
+    button:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+
+    .message {
+      margin-top: 12px;
+      padding: 12px;
+      border-radius: 12px;
+      background: #11151d;
+      border: 1px solid #292f3a;
+      color: #b9c0cc;
+      font-size: 13px;
+      white-space: pre-wrap;
+      word-break: break-word;
+    }
+
+    .session {
+      border: 1px solid #292f3a;
+      border-radius: 14px;
+      padding: 15px;
+      background: #11151d;
+      margin-bottom: 10px;
+    }
+
+    .session:last-child {
+      margin-bottom: 0;
+    }
+
+    .session-number {
+      font-size: 17px;
+      font-weight: 700;
+      margin-bottom: 10px;
+    }
+
+    .session-line {
+      display: flex;
+      justify-content: space-between;
+      gap: 15px;
+      padding: 5px 0;
+      color: #aeb6c3;
+      font-size: 13px;
+    }
+
+    .session-line strong {
+      color: #f5f7fa;
+      text-align: right;
+    }
+
+    .empty {
+      color: #858e9d;
+      font-size: 14px;
+      text-align: center;
+      padding: 15px 0;
+    }
+
+    .footer {
+      text-align: center;
+      color: #626b79;
+      font-size: 12px;
+      padding: 10px 0 20px;
+    }
+
+    @media (max-width: 520px) {
+      body {
+        padding: 10px;
+      }
+
+      .brand {
+        font-size: 25px;
+      }
+
+      .grid {
+        grid-template-columns: 1fr;
+      }
+
+      .section {
+        padding: 16px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <main class="container">
+
+    <header class="header">
+      <div class="brand" id="botName">
+        ZAINU-MD
+      </div>
+
+      <div class="subtitle">
+        Multi-Session WhatsApp Bot Framework
+      </div>
+
+      <div class="status-row">
+        <span class="dot"></span>
+        <span id="serverStatus">
+          Checking server...
+        </span>
+      </div>
+    </header>
+
+
+    <section class="section">
+
+      <div class="section-title">
+        Bot Status
+      </div>
+
+      <div class="grid">
+
+        <div class="card">
+          <div class="label">
+            Status
+          </div>
+
+          <div
+            class="value"
+            id="botStatus"
+          >
+            Loading...
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="label">
+            Version
+          </div>
+
+          <div
+            class="value"
+            id="botVersion"
+          >
+            -
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="label">
+            Total Sessions
+          </div>
+
+          <div
+            class="value"
+            id="totalSessions"
+          >
+            0
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="label">
+            Connected
+          </div>
+
+          <div
+            class="value"
+            id="connectedSessions"
+          >
+            0
+          </div>
+        </div>
+
+      </div>
+
+    </section>
+
+
+    <section class="section">
+
+      <div class="section-title">
+        Pair WhatsApp
+      </div>
+
+      <input
+        id="panelKey"
+        type="password"
+        placeholder="Panel Key"
+        autocomplete="off"
+      >
+
+      <input
+        id="phoneNumber"
+        type="tel"
+        placeholder="WhatsApp number with country code"
+        autocomplete="off"
+      >
+
+      <button
+        id="pairButton"
+        onclick="generatePairingCode()"
+      >
+        Generate Pairing Code
+      </button>
+
+      <div
+        class="message"
+        id="pairResult"
+        style="display:none;"
+      ></div>
+
+    </section>
+
+
+    <section class="section">
+
+      <div class="section-title">
+        Active Sessions
+      </div>
+
+      <div id="sessions">
+        <div class="empty">
+          No active sessions.
+        </div>
+      </div>
+
+    </section>
+
+
+    <section class="section">
+
+      <div class="section-title">
+        Bot Information
+      </div>
+
+      <div class="grid">
+
+        <div class="card">
+          <div class="label">
+            Bot Name
+          </div>
+
+          <div
+            class="value"
+            id="infoName"
+          >
+            -
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="label">
+            Owner
+          </div>
+
+          <div
+            class="value"
+            id="infoOwner"
+          >
+            Not configured
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="label">
+            Multi-Session
+          </div>
+
+          <div
+            class="value"
+            id="infoMulti"
+          >
+            -
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="label">
+            Pairing Code
+          </div>
+
+          <div
+            class="value"
+            id="infoPairing"
+          >
+            -
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="label">
+            Auto Reconnect
+          </div>
+
+          <div
+            class="value"
+            id="infoReconnect"
+          >
+            -
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="label">
+            Commands
+          </div>
+
+          <div
+            class="value"
+            id="infoCommands"
+          >
+            Disabled
+          </div>
+        </div>
+
+      </div>
+
+    </section>
+
+
+    <div class="footer">
+      ZAINU-MD • Framework
+    </div>
+
+  </main>
+
+
+  <script>
+    async function getJson(url, options = {}) {
+      const response = await fetch(
+        url,
+        options
+      );
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        throw new Error(
+          data.error || "Request failed."
+        );
+      }
+
+      return data;
+    }
+
+
+    async function loadBotInfo() {
+      try {
+        const data =
+          await getJson("/api/config");
+
+        const bot = data.bot;
+        const features = data.features;
+
+        document.getElementById(
+          "botName"
+        ).textContent = bot.name;
+
+        document.getElementById(
+          "botVersion"
+        ).textContent = bot.version;
+
+        document.getElementById(
+          "infoName"
+        ).textContent = bot.name;
+
+        document.getElementById(
+          "infoOwner"
+        ).textContent =
+          bot.owner || "Not configured";
+
+        document.getElementById(
+          "infoMulti"
+        ).textContent =
+          features.multiSession
+            ? "Enabled"
+            : "Disabled";
+
+        document.getElementById(
+          "infoPairing"
+        ).textContent =
+          features.pairingCode
+            ? "Enabled"
+            : "Disabled";
+
+        document.getElementById(
+          "infoReconnect"
+        ).textContent =
+          features.autoReconnect
+            ? "Enabled"
+            : "Disabled";
+
+        document.getElementById(
+          "infoCommands"
+        ).textContent =
+          features.commands
+            ? "Enabled"
+            : "Disabled";
+
+      } catch (error) {
+        document.getElementById(
+          "serverStatus"
+        ).textContent =
+          "Server unavailable";
+      }
+    }
+
+
+    async function loadHealth() {
+      try {
+        const data =
+          await getJson("/api/health");
+
+        document.getElementById(
+          "serverStatus"
+        ).textContent =
+          "Server online";
+
+        document.getElementById(
+          "botStatus"
+        ).textContent =
+          data.status;
+
+        document.getElementById(
+          "totalSessions"
+        ).textContent =
+          data.stats.total;
+
+        document.getElementById(
+          "connectedSessions"
+        ).textContent =
+          data.stats.connected;
+
+      } catch (error) {
+        document.getElementById(
+          "serverStatus"
+        ).textContent =
+          "Server unavailable";
+      }
+    }
+
+
+    async function loadSessions() {
+      const container =
+        document.getElementById(
+          "sessions"
+        );
+
+      try {
+        const data =
+          await getJson("/api/sessions");
+
+        if (
+          !data.sessions ||
+          data.sessions.length === 0
+        ) {
+          container.innerHTML =
+            '<div class="empty">' +
+            "No active sessions." +
+            "</div>";
+
+          return;
+        }
+
+        container.innerHTML =
+          data.sessions
+            .map((session) => {
+
+              const status =
+                session.connected
+                  ? "Connected"
+                  : session.status;
+
+              const pairing =
+                session.pairing
+                  ? "Waiting"
+                  : "Inactive";
+
+              return `
+                <div class="session">
+
+                  <div class="session-number">
+                    ${escapeHtml(session.number)}
+                  </div>
+
+                  <div class="session-line">
+                    <span>Status</span>
+                    <strong>
+                      ${escapeHtml(status)}
+                    </strong>
+                  </div>
+
+                  <div class="session-line">
+                    <span>Pairing</span>
+                    <strong>
+                      ${escapeHtml(pairing)}
+                    </strong>
+                  </div>
+
+                </div>
+              `;
+            })
+            .join("");
+
+      } catch (error) {
+        container.innerHTML =
+          '<div class="empty">' +
+          escapeHtml(error.message) +
+          "</div>";
+      }
+    }
+
+
+    async function generatePairingCode() {
+      const button =
+        document.getElementById(
+          "pairButton"
+        );
+
+      const result =
+        document.getElementById(
+          "pairResult"
+        );
+
+      const panelKey =
+        document.getElementById(
+          "panelKey"
+        ).value.trim();
+
+      const number =
+        document.getElementById(
+          "phoneNumber"
+        ).value.trim();
+
+      if (!panelKey) {
+        showPairResult(
+          "Enter the panel key."
+        );
+
+        return;
+      }
+
+      if (!number) {
+        showPairResult(
+          "Enter the WhatsApp number with country code."
+        );
+
+        return;
+      }
+
+      button.disabled = true;
+      button.textContent =
+        "Generating...";
+
+      try {
+        const data =
+          await getJson(
+            "/api/pair",
+            {
+              method: "POST",
+
+              headers: {
+                "Content-Type":
+                  "application/json",
+
+                "X-Panel-Key":
+                  panelKey
+              },
+
+              body: JSON.stringify({
+                number
+              })
+            }
+          );
+
+        if (data.pairingCode) {
+          showPairResult(
+            "Pairing Code:\n\n" +
+            data.pairingCode +
+            "\n\n" +
+            "Open WhatsApp → Linked Devices → " +
+            "Link a Device → Link with phone number instead."
+          );
+        } else {
+          showPairResult(
+            "Session created.\n\n" +
+            "Current status: " +
+            (data.status || "unknown")
+          );
+        }
+
+        await loadSessions();
+        await loadHealth();
+
+      } catch (error) {
+        showPairResult(
+          "Error: " + error.message
+        );
+      } finally {
+        button.disabled = false;
+        button.textContent =
+          "Generate Pairing Code";
+      }
+    }
+
+
+    function showPairResult(message) {
+      const result =
+        document.getElementById(
+          "pairResult"
+        );
+
+      result.style.display = "block";
+      result.textContent = message;
+    }
+
+
+    function escapeHtml(value) {
+      return String(value)
+        .replaceAll("&", "&amp;")
+        .replaceAll("<", "&lt;")
+        .replaceAll(">", "&gt;")
+        .replaceAll('"', "&quot;")
+        .replaceAll("'", "&#039;");
+    }
+
+
+    async function refresh() {
+      await Promise.all([
+        loadBotInfo(),
+        loadHealth(),
+        loadSessions()
+      ]);
+    }
+
+
+    refresh();
+
+    setInterval(
+      refresh,
+      5000
+    );
+  </script>
+
+</body>
+</html>
